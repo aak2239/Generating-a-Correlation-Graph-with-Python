@@ -20,14 +20,14 @@ Usage
 
 Clone this repository:
 bash
-Copy code
+
 git clone <repository_url>
 Install the required dependencies:
-Copy code
+
 pip install pandas numpy matplotlib
 Modify the paths in the script to point to your input CSV files and desired output directory.
 Run the script:
-Copy code
+
 python plot_correlation_graph.py
 This will generate correlation graphs and save them as PDF files in the specified output directory.
 
