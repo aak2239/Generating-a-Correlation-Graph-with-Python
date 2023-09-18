@@ -1,0 +1,66 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+
+def plot_correlation_graph(data, comparison_type, save_path):
+    """
+    Create a correlation graph for a given dataset and comparison type.
+    
+    Args:
+    - data: DataFrame containing the dataset.
+    - comparison_type: 'Simplified' or 'Predicted' indicating which columns to use for comparison.
+    - save_path: The path to save the generated plot.
+    """
+    
+    # Define the mapping for variable names and colors
+    variables = ['EUI', 'Solar_Gain_Total', 'Cooling_Total', 'Heating_Total']
+    colors = {'EUI': 'purple', 'Solar_Gain_Total': 'orange', 'Cooling_Total': 'blue', 'Heating_Total': 'red'}
+    
+    plt.figure(figsize=(13.33, 7.5))
+    
+    for variable in variables:
+        x = data[f"{variable}_{comparison_type}"]
+        y = data[f"{variable}_Original"]
+        
+        # Remove '_Total' from variable name for display
+        display_name = variable.replace('_Total', '')
+        plt.scatter(x, y, color=colors[variable], alpha=0.5, label=display_name, edgecolors='none', s=20)
+
+    # Plot the y=x line for reference
+    lims = [
+        np.min([plt.xlim(), plt.ylim()]),  # min of both axes
+        np.max([plt.xlim(), plt.ylim()]),  # max of both axes
+    ]
+    
+    plt.plot(lims, lims, 'k-', alpha=0.75, zorder=0)
+    plt.xlabel(f"{display_name} {comparison_type}")
+    plt.ylabel(f"{display_name} Original")
+    plt.title(f"{display_name} Original vs {display_name} {comparison_type}")
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    
+    # Save the figure
+    plt.savefig(save_path)
+    plt.close()
+
+# Load your CSV files
+training_df = pd.read_csv("path_to_your_training_csv_file.csv")
+testing_df = pd.read_csv("path_to_your_testing_csv_file.csv")
+
+# Paths for saving the generated graphs
+output_directory = "path_to_your_output_directory"
+if not os.path.exists(output_directory):
+    os.makedirs(output_directory)
+
+training_simplified_path = f"{output_directory}/Training_Simplified_vs_Original.pdf"
+training_predicted_path = f"{output_directory}/Training_Predicted_vs_Original.pdf"
+testing_simplified_path = f"{output_directory}/Testing_Simplified_vs_Original.pdf"
+testing_predicted_path = f"{output_directory}/Testing_Predicted_vs_Original.pdf"
+
+# Generate the correlation graphs
+plot_correlation_graph(training_df, "Simplified", training_simplified_path)
+plot_correlation_graph(training_df, "Predicted", training_predicted_path)
+plot_correlation_graph(testing_df, "Simplified", testing_simplified_path)
+plot_correlation_graph(testing_df, "Predicted", testing_predicted_path)
