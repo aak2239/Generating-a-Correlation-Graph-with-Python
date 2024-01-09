@@ -1,50 +1,45 @@
-#Correlation Graph Generation
+# Repository Overview: Image Resizer Script
 
-This repository contains a Python script that generates correlation graphs comparing predicted/simplified values with original values from a dataset.
+This repository contains a Python script for resizing and padding images. The script allows users to match the size of a batch of images to the dimensions of a reference image. It offers flexibility in usage with command line arguments or a configuration file.
 
-Description
+## Features
+- Resizes images to match the height of a reference image while maintaining the aspect ratio.
+- Pads images to match the reference image's width.
+- Supports common image formats including JPG, JPEG, PNG, BMP, and GIF.
+- Users can specify paths either through command line arguments or a JSON configuration file.
 
-The script reads data from CSV files, processes it, and generates correlation graphs comparing two sets of values:
+## Getting Started
 
-Original values vs. Simplified values
-Original values vs. Predicted values
-These graphs are helpful for visualizing the accuracy and reliability of predictions made by a machine learning model, especially in the context of building energy modeling.
+### Prerequisites
+- Python 3.x
+- Pillow library (PIL fork), can be installed via pip:
+  pip install Pillow
 
-Dependencies
+### Installation
+Clone the repository using:
+  git clone https://github.com/<your-username>/ImageResizer.git
 
-pandas
-numpy
-matplotlib
-os
-Usage
+### Usage
 
-Clone this repository:
-bash
+#### Using Command Line Arguments
+Run the script with the paths as arguments:
+  python image_resizer.py --input_dir <path-to-input-dir> --output_dir <path-to-output-dir> --ref_image <path-to-reference-image>
 
-git clone <repository_url>
-Install the required dependencies:
+#### Using a Configuration File
+Create a JSON file (e.g., config.json) with the following structure:
+{
+    "input_dir": "<path-to-input-dir>",
+    "output_dir": "<path-to-output-dir>",
+    "ref_image": "<path-to-reference-image>"
+}
+Run the script with the config file:
+  python image_resizer.py --config <path-to-config-file>
 
-pip install pandas numpy matplotlib
-Modify the paths in the script to point to your input CSV files and desired output directory.
-Run the script:
+## Contributing
+Contributions to enhance the script are welcome. Please fork the repository and submit a pull request with your changes.
 
-python plot_correlation_graph.py
-This will generate correlation graphs and save them as PDF files in the specified output directory.
+## License
+This project is open-sourced under the MIT License. See the LICENSE file for more details.
 
-Visualization
-
-The generated graphs utilize the following color scheme:
-
-EUI: Purple
-Solar Gain: Orange
-Cooling: Blue
-Heating: Red
-Each graph also contains a reference line (y=x) to easily compare the predicted/simplified values with the original values.
-
-Contributing
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-License
-
-MIT
+## Contact
+For any queries or contributions, please open an issue in the GitHub repository.
